@@ -90,15 +90,18 @@
     .sidebar-box {
       background: #fff4f4;
       padding: 20px;
-      border-radius: 8px;
+      border-radius: 12px;
       border: 1px solid #ffcccc;
       margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.02);
     }
     .info-item {
-      padding: 10px 0;
-      border-bottom: 1px solid #eee;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255, 204, 204, 0.5);
       font-size: 14px;
+      font-weight: 500;
     }
+    .info-item:last-of-type { border-bottom: none; }
   </style>
 </head>
 <body>
@@ -170,10 +173,14 @@
 
       <div>
         <div class="sidebar-box">
-          <h3 style="margin-top: 0; color: #d32f2f; font-size: 16px;">⚠️ 本日の休講・教室変更</h3>
-          <div class="info-item">【文学部】日本文学史II（3限）</div>
-          <div class="info-item">【理工学部】熱力学（4限）教室変更：302 → 501</div>
-          <p style="text-align: right; font-size: 12px; margin-bottom: 0;"><a href="#">もっと見る →</a></p>
+          <h3 style="margin-top: 0; color: #d32f2f; font-size: 16px; display: flex; align-items: center;">
+            <span style="margin-right: 8px;">⚠️</span> 本日の休講・教室変更
+          </h3>
+          <div id="random-info-container">
+            </div>
+          <p style="text-align: right; font-size: 12px; margin-bottom: 0; margin-top: 10px;">
+            <a href="#" style="color: #666; text-decoration: none;">もっと見る →</a>
+          </p>
         </div>
 
         <div class="section-title">学内施設リンク</div>
@@ -187,6 +194,66 @@
 
     </div>
   </div>
+
+  <script>
+    (function() {
+      // --- データ定義 ---
+      const subjects = ["日本文学史II", "熱力学", "計算機概論", "湘南文化論", "経済学基礎", "量子力学I", "心理学統計", "比較文化演習", "有機化学", "マクロ経済学"];
+      const faculties = ["文学部", "理工学部", "法学部", "経済学部", "情報学部"];
+      const rooms = ["101", "205", "302", "404", "501", "大講義室A", "情報実習室1", "8号館2F演習室"];
+
+      // --- 8時切り替えのロジック ---
+      const now = new Date();
+      let seedDate = new Date(now);
+      // 8時前なら「昨日の日付」、8時以降なら「今日の日付」をシードにする
+      if (now.getHours() < 8) {
+        seedDate.setDate(now.getDate() - 1);
+      }
+      
+      // yyyy-mm-dd 形式の文字列を生成
+      const seedString = seedDate.getFullYear() + "-" + (seedDate.getMonth() + 1) + "-" + seedDate.getDate();
+
+      // 文字列をハッシュ化してシード値を作成
+      function getHash(str) {
+        let hash = 0;
+        for (let i = 0; i < str.length; i++) {
+          hash = str.charCodeAt(i) + ((hash << 5) - hash);
+        }
+        return hash;
+      }
+
+      // シード値を元にした乱数生成 (決定論的ランダム)
+      function seededRandom(s) {
+        const x = Math.sin(s) * 10000;
+        return x - Math.floor(x);
+      }
+
+      let currentSeed = getHash(seedString);
+      const container = document.getElementById('random-info-container');
+      
+      // 生成する情報の数 (2つまたは3つ)
+      const count = Math.floor(seededRandom(currentSeed++) * 2) + 2; 
+      let html = '';
+
+      for (let i = 0; i < count; i++) {
+        const isCancel = seededRandom(currentSeed++) > 0.4; // 40%の確率で休講、60%で教室変更
+        const fac = faculties[Math.floor(seededRandom(currentSeed++) * faculties.length)];
+        const sub = subjects[Math.floor(seededRandom(currentSeed++) * subjects.length)];
+        const period = Math.floor(seededRandom(currentSeed++) * 5) + 1;
+
+        if (isCancel) {
+          html += `<div class="info-item">【${fac}】${sub}（${period}限） 休講</div>`;
+        } else {
+          const fromRoom = rooms[Math.floor(seededRandom(currentSeed++) * rooms.length)];
+          let toRoom = rooms[Math.floor(seededRandom(currentSeed++) * rooms.length)];
+          if (fromRoom === toRoom) toRoom = "別館ホール"; // 重複回避
+          html += `<div class="info-item">【${fac}】${sub}（${period}限） 教室変更：${fromRoom} → ${toRoom}</div>`;
+        }
+      }
+
+      container.innerHTML = html;
+    })();
+  </script>
 
 </body>
 </html>
