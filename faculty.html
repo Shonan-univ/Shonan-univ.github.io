@@ -9,18 +9,15 @@
 
     body {
       margin: 0;
-      font-family: "Helvetica Neue", Arial, sans-serif;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
       background: #ffffff;
       color: #111;
+      line-height: 1.6;
     }
 
-    /* ページ全体のリンク基本設定 */
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
+    a { color: inherit; text-decoration: none; }
 
-    /* ===== TOP BAR (フルリンク対応版) ===== */
+    /* ===== TOP BAR ===== */
     .top-bar {
       display: flex;
       align-items: center;
@@ -32,52 +29,17 @@
       white-space: nowrap;
     }
 
-    /* トップバー内のリンク指定 */
-    .top-bar a {
-      color: #ffffff !important;
-      text-decoration: none;
-    }
+    .top-bar a { color: #ffffff !important; }
 
-    .top-left {
-      display: flex;
-      align-items: center;
-    }
+    .top-left { display: flex; align-items: center; }
+    .logo { height: 56px; margin-right: 14px; }
+    .univ-line { display: flex; align-items: center; }
+    .univ-name { font-weight: 600; font-size: 15px; margin-right: 18px; }
+    .nav-item { padding: 0 12px; cursor: pointer; display: inline-block; }
+    .nav-item:hover { text-decoration: underline !important; }
 
-    .logo {
-      height: 56px;
-      margin-right: 14px;
-    }
-
-    .univ-line {
-      display: flex;
-      align-items: center;
-    }
-
-    .univ-name {
-      font-weight: 600;
-      font-size: 15px;
-      margin-right: 18px;
-    }
-
-    .nav-item {
-      padding: 0 12px;
-      cursor: pointer;
-      display: inline-block;
-    }
-
-    .nav-item:hover {
-      text-decoration: underline !important;
-    }
-
-    .top-right {
-      display: flex;
-      align-items: center;
-      gap: 18px;
-    }
-
-    .right-item:hover {
-      text-decoration: underline !important;
-    }
+    .top-right { display: flex; align-items: center; gap: 18px; }
+    .right-item:hover { text-decoration: underline !important; }
 
     /* ===== PAGE HEADER ===== */
     .page-header {
@@ -89,6 +51,7 @@
       margin: 0;
       font-size: 32px;
       font-weight: 600;
+      color: #0b2a44;
     }
 
     .page-header p {
@@ -112,15 +75,13 @@
       border-bottom: 1px solid #e0e0e0;
     }
 
-    .faculty:last-child {
-      border-bottom: none;
-    }
+    .faculty:last-child { border-bottom: none; }
 
     .faculty-title {
       display: flex;
       align-items: center;
       gap: 20px;
-      margin-bottom: 20px;
+      margin-bottom: 30px;
     }
 
     .faculty-title img {
@@ -137,12 +98,18 @@
     }
 
     .department {
-      margin-bottom: 18px;
+      margin-bottom: 24px;
+      padding-left: 92px; /* ロゴの幅+gapに合わせる */
+    }
+
+    @media (max-width: 768px) {
+      .department { padding-left: 0; }
     }
 
     .department-title {
       font-weight: 600;
-      font-size: 16px;
+      font-size: 17px;
+      color: #333;
     }
 
     .description {
@@ -150,11 +117,10 @@
       font-size: 14px;
       color: #555;
       line-height: 1.7;
-      max-width: 900px;
+      max-width: 850px;
     }
 
     footer {
-      margin-top: 80px;
       padding: 48px;
       font-size: 12px;
       color: #777;
@@ -171,18 +137,16 @@
     <a href="index.html">
       <img src="newemblem.png" alt="湘南中央大学 校章" class="logo">
     </a>
-
     <div class="univ-line">
       <a href="index.html" class="univ-name">湘南中央大学</a>
-      <a href="education.html" class="nav-item">教育</a>
+      <a href="faculty.html" class="nav-item">学部・学科</a>
       <a href="research.html" class="nav-item">研究</a>
       <a href="social.html" class="nav-item">社会連携</a>
       <a href="exam.html" class="nav-item">受験生</a>
       <a href="line.html" class="nav-item">LINE公式</a>
       <a href="alumni.html" class="nav-item">卒業生</a>
       <a href="parents.html" class="nav-item">保護者等</a>
-      <a href="campus-life.html" class="nav-item">在学生・教職員</a>
-      <a href="general.html" class="nav-item">一般・連携</a>
+      <a href="campus_life.html" class="nav-item">在学生・教職員</a>
     </div>
   </div>
 
@@ -190,7 +154,6 @@
     <a href="donation.html" class="right-item">ご寄付</a>
     <a href="access.html" class="right-item">アクセス</a>
     <a href="data.html" class="right-item">データ集</a>
-    <a href="search.html" class="right-item">検索</a>
     <a href="lang.html" class="right-item">Language</a>
   </div>
 </div>
@@ -241,7 +204,7 @@
 
   <div class="faculty">
     <div class="faculty-title">
-      <img src="LawNew.png" alt="LAW">
+      <img src="LawNew.png" alt="Law">
       <h2>法学部</h2>
     </div>
     <div class="department">
@@ -260,8 +223,53 @@
       <h2>教育学部</h2>
     </div>
     <div class="department">
-      <div class="department-title">学校教育学科（定員100名）</div>
+      <div class="department-title">初等教育学科（定員100名）</div>
       <div class="description">小学校・中学校の教員免許取得を目指し、実践的な指導力を身につけます。</div>
+    </div>
+  </div>
+
+  <div class="faculty">
+    <div class="faculty-title">
+      <img src="HUM.png" alt="HUM">
+      <h2>人間社会学部</h2>
+    </div>
+    <div class="department">
+      <div class="department-title">社会学科（定員120名）</div>
+      <div class="description">現代社会の諸問題を調査・分析し、共生社会の実現に貢献する力を養います。</div>
+    </div>
+    <div class="department">
+      <div class="department-title">心理学科（定員80名）</div>
+      <div class="description">基礎から臨床心理まで幅広く学び、対人支援のプロフェッショナルを育成します。</div>
+    </div>
+  </div>
+
+  <div class="faculty">
+    <div class="faculty-title">
+      <img src="TAC.png" alt="TAC">
+      <h2>観光文化学部</h2>
+    </div>
+    <div class="department">
+      <div class="department-title">観光学科（定員100名）</div>
+      <div class="description">湘南の立地を活かしたフィールドワークを通じ、観光振興のリーダーを育成します。</div>
+    </div>
+    <div class="department">
+      <div class="department-title">地域交流学科（定員60名）</div>
+      <div class="description">文化交流や地域コミュニティの活性化を理論と実践の両面から学びます。</div>
+    </div>
+  </div>
+
+  <div class="faculty">
+    <div class="faculty-title">
+      <img src="LAP.png" alt="LAP">
+      <h2>生活環境計画学部</h2>
+    </div>
+    <div class="department">
+      <div class="department-title">農学科（定員70名）</div>
+      <div class="description">持続可能な農業と食の安全を追求し、スマート農業や品種改良について学びます。</div>
+    </div>
+    <div class="department">
+      <div class="department-title">生活環境計画学科（定員50名）</div>
+      <div class="description">住環境から都市計画まで、人々の暮らしを豊かにするデザインと技術を学びます。</div>
     </div>
   </div>
 
