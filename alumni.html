@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>卒業生の方へ | 湘南中央大学</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif;
+      background: #ffffff;
+      line-height: 1.8;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ===== TOP BAR (共通) ===== */
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 48px;
+      background: #0b2a44;
+      color: #ffffff;
+      font-size: 14px;
+    }
+    .top-bar a { color: #ffffff; }
+
+    .top-left { display: flex; align-items: center; white-space: nowrap; }
+    .logo { height: 56px; margin-right: 14px; vertical-align: middle; }
+    .univ-line { display: flex; align-items: center; }
+    .univ-name { font-weight: 600; font-size: 15px; margin-right: 18px; cursor: pointer; }
+    .nav-item { padding: 0 12px; cursor: pointer; }
+    .nav-item:hover { text-decoration: underline; }
+
+    .top-right { display: flex; align-items: center; gap: 18px; white-space: nowrap; }
+
+    /* ===== HERO ===== */
+    .hero {
+      height: 250px;
+      background-image: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url("https://images.unsplash.com/photo-1523050853063-bd8012fec058?auto=format&fit=crop&w=1200&q=80");
+      background-size: cover;
+      background-position: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      text-align: center;
+    }
+
+    .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; }
+
+    /* ===== MENU GRID ===== */
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin-top: 30px;
+    }
+
+    .menu-card {
+      display: flex;
+      align-items: center;
+      padding: 30px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+      background: #fdfdfd;
+    }
+    .menu-card:hover {
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      border-color: #0b2a44;
+      transform: translateY(-3px);
+    }
+
+    .icon-box {
+      font-size: 40px;
+      margin-right: 25px;
+      min-width: 60px;
+      text-align: center;
+    }
+
+    .menu-text h3 { margin: 0 0 10px 0; color: #0b2a44; }
+    .menu-text p { margin: 0; font-size: 14px; color: #666; }
+
+    /* ===== INFORMATION ===== */
+    .news-box {
+      margin-top: 60px;
+      padding: 40px;
+      background: #f8f9fa;
+      border-radius: 12px;
+    }
+    .news-title {
+      border-bottom: 2px solid #0b2a44;
+      padding-bottom: 10px;
+      margin-bottom: 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <div class="top-left">
+      <a href="index.html"><img src="newemblem.png" alt="湘南中央大学 校章" class="logo"></a>
+      <div class="univ-line">
+        <a href="index.html" class="univ-name">湘南中央大学</a>
+        <a href="education.html" class="nav-item">教育</a>
+        <a href="research.html" class="nav-item">研究</a>
+        <a href="social.html" class="nav-item">社会連携</a>
+        <a href="exam.html" class="nav-item">受験生</a>
+        <a href="line.html" class="nav-item">LINE公式</a>
+        <a href="alumni.html" class="nav-item">卒業生</a>
+        <a href="parents.html" class="nav-item">保護者等</a>
+        <a href="campus_life.html" class="nav-item">在学生・教職員</a>
+      </div>
+    </div>
+    <div class="top-right">
+      <a href="donation.html" class="right-item">ご寄付</a>
+      <a href="access.html" class="right-item">アクセス</a>
+    </div>
+  </div>
+
+  <section class="hero">
+    <div>
+      <h1 style="font-size: 32px; margin: 0;">卒業生の方へ</h1>
+      <p style="letter-spacing: 0.1em;">For Alumni</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <div class="menu-grid">
+      <a href="certificates.html">
+        <div class="menu-card">
+          <div class="icon-box">📄</div>
+          <div class="menu-text">
+            <h3>各種証明書の発行</h3>
+            <p>卒業証明書・成績証明書等のオンライン申請および郵送での受付について。</p>
+          </div>
+        </div>
+      </a>
+
+      <a href="alumni_association.html">
+        <div class="menu-card">
+          <div class="icon-box">🤝</div>
+          <div class="menu-text">
+            <h3>同窓会「湘央会」</h3>
+            <p>全国各地の支部活動や、ホームカミングデーの開催情報をご案内します。</p>
+          </div>
+        </div>
+      </a>
+
+      <div class="menu-card" style="cursor: pointer;">
+        <div class="icon-box">💼</div>
+        <div class="menu-text">
+          <h3>既卒者キャリア支援</h3>
+          <p>卒業後の転職相談や、学内のキャリアセンターの利用方法について。</p>
+        </div>
+      </div>
+
+      <a href="donation.html">
+        <div class="menu-card" style="border: 2px solid #d4af37;">
+          <div class="icon-box">🎁</div>
+          <div class="menu-text">
+            <h3>母校へのご支援（寄付）</h3>
+            <p>湘南中央大学の教育・研究環境のさらなる発展のため、ご支援をお願いいたします。</p>
+          </div>
+        </div>
+      </a>
+    </div>
+
+    <div class="news-box">
+      <div class="news-title">
+        <h2 style="margin:0; font-size: 20px;">卒業生向けニュース</h2>
+        <span style="font-size: 14px; color: #666;">一覧を見る →</span>
+      </div>
+      <ul style="list-style: none; padding: 0;">
+        <li style="padding: 15px 0; border-bottom: 1px solid #eee;">
+          <span style="color: #666; margin-right: 20px;">2024.02.01</span>
+          <a href="#" style="font-weight: 500;">2024年度ホームカミングデーの開催日程が決定しました</a>
+        </li>
+        <li style="padding: 15px 0; border-bottom: 1px solid #eee;">
+          <span style="color: #666; margin-right: 20px;">2024.01.15</span>
+          <a href="#" style="font-weight: 500;">【重要】改姓に伴う証明書発行の注意事項について</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</body>
+</html>
