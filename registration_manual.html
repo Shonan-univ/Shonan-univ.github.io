@@ -14,12 +14,12 @@
     body { margin: 0; font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", sans-serif; background: #fff; }
     a { color: inherit; text-decoration: none; }
 
-    /* ===== TOP BAR (ご提示のコードを完全適用) ===== */
+    /* ===== TOP BAR (ご提示のコード) ===== */
     .top-bar {
       display: flex; align-items: center; justify-content: space-between;
       padding: 16px 48px; background: #0b2a44; color: #ffffff; font-size: 14px;
     }
-    .top-bar a, .top-bar a:visited, .top-bar a:hover, .top-bar a:active { color: #ffffff; text-decoration: none; }
+    .top-bar a { color: #ffffff; }
     .top-left { display: flex; align-items: center; white-space: nowrap; }
     .logo { height: 56px; margin-right: 14px; }
     .univ-line { display: flex; align-items: center; }
@@ -31,7 +31,10 @@
     .right-item:hover { text-decoration: underline; }
 
     /* ===== MAIN CONTENT ===== */
-    .main-container { max-width: 1050px; margin: 30px auto; padding: 0 20px; padding-bottom: 120px; }
+    .main-container { max-width: 1050px; margin: 30px auto; padding: 0 20px; padding-bottom: 120px; position: relative; }
+
+    /* 確定後にクリックを無効化するレイヤー */
+    #lock-layer { display: none; position: absolute; inset: 0; z-index: 500; cursor: not-allowed; }
 
     .utility-bar { display: flex; align-items: center; margin-bottom: 15px; }
     #year-select { padding: 4px 8px; border: 1px solid #333; font-size: 16px; margin-right: 15px; }
@@ -51,7 +54,6 @@
     .timetable th { background: var(--light-blue); border: 1px solid var(--border-color); padding: 8px; font-weight: normal; font-size: 13px; }
     .timetable td { border: 1px solid var(--border-color); height: 95px; vertical-align: top; padding: 0; position: relative; }
 
-    /* 講義スロット（クリック可能範囲を全体に） */
     .slot-trigger { width: 100%; height: 100%; padding: 5px; box-sizing: border-box; cursor: pointer; display: flex; flex-direction: column; font-size: 11px; line-height: 1.3; }
     .slot-trigger:hover { background-color: #f0f0f0; }
     .filled-cell { background-color: #d1e3ff !important; }
@@ -59,7 +61,7 @@
     .subject-code { color: var(--meiji-blue); }
     .subject-name { font-weight: bold; margin: 1px 0; }
     .status-badge { display: inline-block; color: #e67e22; border: 1px solid #e67e22; padding: 0 2px; font-size: 10px; width: fit-content; margin-bottom: 2px; }
-    .edit-icon { position: absolute; bottom: 4px; right: 4px; font-size: 11px; color: #aaa; pointer-events: none; }
+    .edit-icon { position: absolute; bottom: 4px; right: 4px; font-size: 11px; color: #aaa; }
 
     /* ===== FOOTER ===== */
     .footer-action { 
@@ -69,7 +71,6 @@
     }
     .hint-label { background: #002e63; color: white; padding: 6px 20px; border-radius: 4px; font-size: 13px; }
     .btn-confirm { background: #0089a7; color: white; border: 1px solid #006e85; padding: 12px 40px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 15px; }
-    .btn-confirm:hover { background: #007691; }
 
     /* Modal */
     #overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center; }
@@ -83,32 +84,32 @@
       <img src="newemblem.png" alt="湘南中央大学 校章" class="logo">
       <div class="univ-line">
         <span class="univ-name">湘南中央大学</span>
-        <a href="education.html" class="nav-item">教育</a>
-        <a href="research.html" class="nav-item">研究</a>
-        <a href="social.html" class="nav-item">社会連携</a>
-        <a href="exam.html" class="nav-item">受験生</a>
-        <a href="line.html" class="nav-item">LINE公式</a>
-        <a href="alumni.html" class="nav-item">卒業生</a>
-        <a href="parents.html" class="nav-item">保護者等</a>
-        <a href="campus_life.html" class="nav-item">在学生・教職員</a>
-        <a href="public.html" class="nav-item">一般・連携</a>
+        <a href="#" class="nav-item">教育</a>
+        <a href="#" class="nav-item">研究</a>
+        <a href="#" class="nav-item">社会連携</a>
+        <a href="#" class="nav-item">受験生</a>
+        <a href="#" class="nav-item">LINE公式</a>
+        <a href="#" class="nav-item">卒業生</a>
+        <a href="#" class="nav-item">保護者等</a>
+        <a href="#" class="nav-item"> campus_life.html</a> <a href="#" class="nav-item">一般・連携</a>
       </div>
     </div>
     <div class="top-right">
-      <a href="donation.html" class="right-item">ご寄付</a>
-      <a href="access.html" class="right-item">アクセス</a>
-      <a href="data.html" class="right-item">データ集</a>
+      <a href="#" class="right-item">ご寄付</a>
+      <a href="#" class="right-item">アクセス</a>
+      <a href="#" class="right-item">データ集</a>
       <span class="right-item">検索</span>
       <span class="right-item">Language</span>
     </div>
   </div>
 
   <div class="main-container">
+    <div id="lock-layer"></div>
     <div class="utility-bar">
       <select id="year-select"></select>
       <div class="term-tabs">
-        <div class="term-tab" id="tab-spring">春(<span class="auto-year"></span>年度)</div>
-        <div class="term-tab active" id="tab-fall">秋(<span class="auto-year"></span>年度)</div>
+        <div class="term-tab" id="tab-spring" onclick="changeTerm('spring')">春(<span class="auto-year"></span>年度)</div>
+        <div class="term-tab active" id="tab-fall" onclick="changeTerm('fall')">秋(<span class="auto-year"></span>年度)</div>
       </div>
     </div>
 
@@ -128,7 +129,7 @@
     </table>
   </div>
 
-  <div class="footer-action">
+  <div class="footer-action" id="footer-bar">
     <div class="hint-label">登録内容確認を押します ➔</div>
     <button class="btn-confirm" onclick="openConfirm()">登録内容確認</button>
   </div>
@@ -136,9 +137,9 @@
   <div id="overlay">
     <div class="modal">
       <h2 style="margin-top:0; color:var(--scu-navy)">履修登録の確定</h2>
-      <p>この内容で登録申請を行います。よろしいですか？</p>
+      <p>確定すると、これ以降の修正は一切できません。<br>よろしいですか？</p>
       <div style="margin-top: 20px;">
-        <button class="btn-confirm" onclick="location.reload()">はい、確定します</button>
+        <button class="btn-confirm" onclick="finalize()">はい、確定します</button>
         <button style="padding: 10px 25px; margin-left: 10px; cursor:pointer;" onclick="closeConfirm()">戻る</button>
       </div>
     </div>
@@ -146,10 +147,10 @@
 
 <script>
   const currentYear = new Date().getFullYear();
-  const STORAGE_KEY = 'scu_fixed_timetable_v2';
+  let currentTerm = 'fall';
+  const STORAGE_PREFIX = 'scu_fixed_term_';
 
   function init() {
-    // 年度
     document.getElementById('year-select').innerHTML = `<option>${currentYear}年度</option>`;
     document.querySelectorAll('.auto-year').forEach(el => el.textContent = currentYear);
     loadData();
@@ -163,10 +164,18 @@
     {code: "ECO4040",  name: "統計学基礎", teacher: "高橋 浩", status: ""}
   ];
 
+  function changeTerm(term) {
+    if(document.getElementById('lock-layer').style.display === 'block') return;
+    currentTerm = term;
+    document.getElementById('tab-spring').classList.toggle('active', term === 'spring');
+    document.getElementById('tab-fall').classList.toggle('active', term === 'fall');
+    loadData();
+  }
+
   function loadData() {
-    let stored = localStorage.getItem(STORAGE_KEY);
+    let stored = localStorage.getItem(STORAGE_PREFIX + currentTerm);
     let data = stored ? JSON.parse(stored) : generateRandomData();
-    if (!stored) localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    if (!stored) localStorage.setItem(STORAGE_PREFIX + currentTerm, JSON.stringify(data));
     render(data);
   }
 
@@ -188,15 +197,13 @@
       for (let j = 0; j < 6; j++) {
         let td = document.createElement('td');
         const sub = data[idx++];
-        
-        // セルの中身（全体をクリック可能にするためのdiv）
         let content = document.createElement('div');
         content.className = 'slot-trigger';
         if (sub) td.classList.add('filled-cell');
 
         content.onclick = function() {
+          if(document.getElementById('lock-layer').style.display === 'block') return;
           td.classList.toggle('filled-cell');
-          // 保存データの更新処理などはここに追加可能
         };
 
         if (sub) {
@@ -216,9 +223,17 @@
     }
   }
 
-  // モーダル制御
   function openConfirm() { document.getElementById('overlay').style.display = 'flex'; }
   function closeConfirm() { document.getElementById('overlay').style.display = 'none'; }
+
+  // 確定処理
+  function finalize() {
+    closeConfirm();
+    document.getElementById('lock-layer').style.display = 'block';
+    document.getElementById('footer-bar').style.background = '#ccc';
+    document.getElementById('footer-bar').innerHTML = '<span style="font-weight:bold; color:#666;">履修申請は確定済みです。修正はできません。</span>';
+    alert("履修登録を確定しました。");
+  }
 
   init();
 </script>
