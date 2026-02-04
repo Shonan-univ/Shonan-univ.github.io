@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <title>WEB履修登録操作手順 | 湘南中央大学</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
+      background: #ffffff;
+      color: #333;
+      line-height: 1.8;
+    }
+    a { color: #004098; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ===== TOP BAR (大学共通) ===== */
+    .top-bar {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 16px 48px; background: #0b2a44; color: #ffffff;
+    }
+    .logo-area { display: flex; align-items: center; }
+    .logo { height: 40px; margin-right: 12px; }
+    .univ-name { font-weight: 600; font-size: 18px; }
+
+    /* ===== BREADCRUMB ===== */
+    .breadcrumb {
+      background: #f8f9fa;
+      padding: 10px 48px;
+      font-size: 12px;
+      color: #666;
+      border-bottom: 1px solid #eee;
+    }
+
+    /* ===== MAIN CONTENT ===== */
+    .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+
+    h1 {
+      font-size: 32px;
+      color: #0b2a44;
+      border-bottom: 2px solid #0b2a44;
+      padding-bottom: 10px;
+      margin-bottom: 30px;
+    }
+
+    .lead-text {
+      background: #fdfdfd;
+      border: 1px solid #ddd;
+      padding: 20px;
+      margin-bottom: 40px;
+    }
+
+    /* 明治風の見出しスタイル */
+    h2 {
+      background: #f2f4f7;
+      padding: 12px 20px;
+      border-left: 5px solid #0b2a44;
+      font-size: 22px;
+      color: #0b2a44;
+      margin-top: 50px;
+    }
+
+    h3 {
+      font-size: 18px;
+      color: #0b2a44;
+      border-bottom: 1px solid #ddd;
+      padding-bottom: 5px;
+      margin-top: 30px;
+    }
+
+    .step-box {
+      margin: 20px 0;
+      padding-left: 20px;
+    }
+
+    /* 画像の代わりのモックアップエリア */
+    .image-placeholder {
+      background: #f0f0f0;
+      border: 1px solid #ccc;
+      padding: 40px;
+      text-align: center;
+      margin: 20px 0;
+      color: #999;
+      font-size: 14px;
+      border-radius: 4px;
+    }
+
+    /* 重要メッセージ */
+    .alert-box {
+      background: #fff5f5;
+      border: 1px solid #feb2b2;
+      padding: 20px;
+      margin: 20px 0;
+      color: #c53030;
+    }
+    .alert-box strong { display: block; margin-bottom: 5px; }
+
+    /* 学部別科目検索用テーブル */
+    .faculty-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 10px;
+    }
+    .faculty-table td {
+      border: 1px solid #ddd;
+      padding: 10px;
+      font-size: 14px;
+      text-align: center;
+      background: #fafafa;
+    }
+
+    footer {
+      margin-top: 80px;
+      padding: 40px;
+      text-align: center;
+      font-size: 12px;
+      color: #777;
+      border-top: 1px solid #eee;
+    }
+  </style>
+</head>
+<body>
+
+<div class="top-bar">
+  <div class="logo-area">
+    <img src="newemblem.png" alt="Logo" class="logo">
+    <span class="univ-name">湘南中央大学</span>
+  </div>
+</div>
+
+<div class="breadcrumb">
+  ホーム ＞ 在学生の方 ＞ 各種手続き ＞ WEB履修登録操作手順
+</div>
+
+<div class="container">
+  <h1>WEB履修登録操作手順</h1>
+
+  <div class="lead-text">
+    WEB履修登録は<strong>＜湘南中央大学教務システム S-Navi＞</strong>で行います。<br>
+    統合認証IDでログインし、指定された期間内に登録を完了させてください。
+    <br><br>
+    <a href="#">＞ 湘南中央大学教務システム S-Navi ログイン画面</a>
+  </div>
+
+  <h2>1. システムへのログイン</h2>
+  <div class="step-box">
+    <p>言語を選択して「Login」を押します。認証画面が表示されるので、統合認証IDとパスワードを入力してください。</p>
+    <div class="image-placeholder">【S-Navi ログイン画面 イメージ】</div>
+  </div>
+
+  <h2>2. 履修登録メニューの選択</h2>
+  <div class="step-box">
+    <p>トップページのメニューから「履修・成績」をクリックし、さらに「履修登録」を選択します。</p>
+    <div class="image-placeholder">【メニュー選択画面 イメージ】</div>
+  </div>
+
+  <h2>3. 科目の検索・選択</h2>
+  <div class="step-box">
+    <p>「科目の追加」ボタンを押し、自身の所属学部の開講科目を検索します。湘南中央大学では、以下の7学部の科目が提供されています。</p>
+    
+    <table class="faculty-table">
+      <tr>
+        <td>経営学部</td><td>経済学部</td><td>法学部</td><td>教育学部</td>
+      </tr>
+      <tr>
+        <td>人間社会学部</td><td>観光文化学部</td><td colspan="2">生活環境計画学部</td>
+      </tr>
+    </table>
+
+    <div class="alert-box">
+      <strong>【注意】</strong>
+      他学部履修を希望する場合は、必ず各学部の「履修の手引き」を確認し、上限単位数に注意してください。
+    </div>
+  </div>
+
+  <h2>4. 登録内容の確認・確定</h2>
+  <div class="step-box">
+    <h3>講義の確認</h3>
+    <p>全ての科目を登録した後、ページ下部の<strong>＜登録内容を確認＞</strong>を押します。</p>
+    
+    <h3>登録の実行</h3>
+    <p>表示された一覧に間違いがなければ、<strong>＜登録実行＞</strong>を押してください。このボタンを押さない限り、データは保存されません。</p>
+    
+    <div class="image-placeholder" style="border: 2px dashed #0b2a44;">
+      【登録完了：この画面をスクリーンショットなどで保存してください】
+    </div>
+  </div>
+
+  <h2>5. エラーが出た場合</h2>
+  <div class="step-box">
+    <p>「時間割重複」「単位上限超え」などのエラーが表示された場合は、該当科目のチェックを外して再度確認を行ってください。</p>
+  </div>
+
+  <div class="alert-box" style="background: #fff9db; border-color: #fadb14; color: #856404;">
+    <strong>【履修登録期間外の操作について】</strong>
+    期間を過ぎた後の追加・修正は一切認められません。進級・卒業要件に関わるため、必ず最終確定画面を確認してください。
+  </div>
+
+</div>
+
+<footer>
+  &copy; 2026 Shonan Chuo University. All Rights Reserved.
+</footer>
+
+</body>
+</html>
