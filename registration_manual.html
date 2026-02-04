@@ -2,206 +2,114 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>WEB履修登録操作手順 | 湘南中央大学</title>
+  <title>履修登録システム S-Navi | 湘南中央大学</title>
   <style>
-    * { box-sizing: border-box; }
-    body {
-      margin: 0;
-      font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Meiryo", sans-serif;
-      background: #ffffff;
-      color: #333;
-      line-height: 1.8;
-    }
-    a { color: #004098; text-decoration: none; }
-    a:hover { text-decoration: underline; }
+    :root { --main-blue: #0b2a44; --accent-gold: #d4af37; --bg-gray: #f4f7f8; }
+    body { margin: 0; font-family: sans-serif; background: var(--bg-gray); color: #333; }
+    
+    /* ヘッダー */
+    header { background: var(--main-blue); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
+    .status-bar { font-size: 13px; }
 
-    /* ===== TOP BAR (大学共通) ===== */
-    .top-bar {
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 16px 48px; background: #0b2a44; color: #ffffff;
-    }
-    .logo-area { display: flex; align-items: center; }
-    .logo { height: 40px; margin-right: 12px; }
-    .univ-name { font-weight: 600; font-size: 18px; }
+    .container { max-width: 1100px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    
+    h2 { border-left: 5px solid var(--main-blue); padding-left: 10px; font-size: 20px; }
 
-    /* ===== BREADCRUMB ===== */
-    .breadcrumb {
-      background: #f8f9fa;
-      padding: 10px 48px;
-      font-size: 12px;
-      color: #666;
-      border-bottom: 1px solid #eee;
-    }
+    /* 時間割テーブル */
+    .timetable { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
+    .timetable th { background: #eef2f6; border: 1px solid #ccc; padding: 10px; font-size: 14px; }
+    .timetable td { border: 1px solid #ccc; height: 80px; text-align: center; vertical-align: middle; padding: 5px; }
 
-    /* ===== MAIN CONTENT ===== */
-    .container { max-width: 900px; margin: 40px auto; padding: 0 20px; }
+    /* 授業ボタン */
+    .subject-btn {
+      width: 100%; height: 100%; border: 1px dashed #aaa; background: #fafafa;
+      cursor: pointer; font-size: 12px; transition: 0.2s; border-radius: 4px;
+    }
+    .subject-btn:hover { background: #eef; border-color: var(--main-blue); }
+    .subject-btn.selected { background: #d1e3ff; border: 1px solid #0056b3; font-weight: bold; color: #0056b3; }
 
-    h1 {
-      font-size: 32px;
-      color: #0b2a44;
-      border-bottom: 2px solid #0b2a44;
-      padding-bottom: 10px;
-      margin-bottom: 30px;
-    }
+    /* 下部アクション */
+    .action-area { margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px; border-top: 2px solid #eee; padding-top: 20px; }
+    .btn { padding: 12px 30px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+    .btn-save { background: #666; color: white; }
+    .btn-confirm { background: #c53030; color: white; }
 
-    .lead-text {
-      background: #fdfdfd;
-      border: 1px solid #ddd;
-      padding: 20px;
-      margin-bottom: 40px;
-    }
-
-    /* 明治風の見出しスタイル */
-    h2 {
-      background: #f2f4f7;
-      padding: 12px 20px;
-      border-left: 5px solid #0b2a44;
-      font-size: 22px;
-      color: #0b2a44;
-      margin-top: 50px;
-    }
-
-    h3 {
-      font-size: 18px;
-      color: #0b2a44;
-      border-bottom: 1px solid #ddd;
-      padding-bottom: 5px;
-      margin-top: 30px;
-    }
-
-    .step-box {
-      margin: 20px 0;
-      padding-left: 20px;
-    }
-
-    /* 画像の代わりのモックアップエリア */
-    .image-placeholder {
-      background: #f0f0f0;
-      border: 1px solid #ccc;
-      padding: 40px;
-      text-align: center;
-      margin: 20px 0;
-      color: #999;
-      font-size: 14px;
-      border-radius: 4px;
-    }
-
-    /* 重要メッセージ */
-    .alert-box {
-      background: #fff5f5;
-      border: 1px solid #feb2b2;
-      padding: 20px;
-      margin: 20px 0;
-      color: #c53030;
-    }
-    .alert-box strong { display: block; margin-bottom: 5px; }
-
-    /* 学部別科目検索用テーブル */
-    .faculty-table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 10px;
-    }
-    .faculty-table td {
-      border: 1px solid #ddd;
-      padding: 10px;
-      font-size: 14px;
-      text-align: center;
-      background: #fafafa;
-    }
-
-    footer {
-      margin-top: 80px;
-      padding: 40px;
-      text-align: center;
-      font-size: 12px;
-      color: #777;
-      border-top: 1px solid #eee;
-    }
+    /* モーダル（完了通知） */
+    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
+    .modal-content { background: white; padding: 40px; border-radius: 10px; text-align: center; max-width: 400px; }
   </style>
 </head>
 <body>
 
-<div class="top-bar">
-  <div class="logo-area">
-    <img src="newemblem.png" alt="Logo" class="logo">
-    <span class="univ-name">湘南中央大学</span>
-  </div>
-</div>
-
-<div class="breadcrumb">
-  ホーム ＞ 在学生の方 ＞ 各種手続き ＞ WEB履修登録操作手順
-</div>
+<header>
+  <div>湘南中央大学 教務システム <strong>S-Navi</strong></div>
+  <div class="status-bar">ログイン中：2026SCU001 湘南 太郎（生活環境計画学部）</div>
+</header>
 
 <div class="container">
-  <h1>WEB履修登録操作手順</h1>
+  <h2>2026年度 春学期 履修登録</h2>
+  <p style="font-size: 13px; color: #666;">※コマをクリックして授業を選択してください。</p>
 
-  <div class="lead-text">
-    WEB履修登録は<strong>＜湘南中央大学教務システム S-Navi＞</strong>で行います。<br>
-    統合認証IDでログインし、指定された期間内に登録を完了させてください。
-    <br><br>
-    <a href="#">＞ 湘南中央大学教務システム S-Navi ログイン画面</a>
+  <table class="timetable">
+    <tr>
+      <th style="width: 50px;">限</th>
+      <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '経営学入門')">経営学入門</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, 'ミクロ経済学')">ミクロ経済学</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '法学概論')">法学概論</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '情報リテラシー')">情報リテラシー</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '英語I')">英語I</button></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '日本文学')">日本文学</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '心理学基礎')">心理学基礎</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '湘南地域論')">湘南地域論</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, '農業科学')">農業科学</button></td>
+      <td><button class="subject-btn" onclick="toggleSubject(this, 'スポーツ実習')">スポーツ実習</button></td>
+    </tr>
+  </table>
+
+  <div class="action-area">
+    <div style="margin-right: auto; font-size: 14px;">現在の登録単位数： <strong id="unit-count">0</strong> / 24単位</div>
+    <button class="btn btn-save" onclick="alert('一時保存しました')">一時保存</button>
+    <button class="btn btn-confirm" onclick="showComplete()">登録内容を確認して確定</button>
   </div>
-
-  <h2>1. システムへのログイン</h2>
-  <div class="step-box">
-    <p>言語を選択して「Login」を押します。認証画面が表示されるので、統合認証IDとパスワードを入力してください。</p>
-    <div class="image-placeholder">【S-Navi ログイン画面 イメージ】</div>
-  </div>
-
-  <h2>2. 履修登録メニューの選択</h2>
-  <div class="step-box">
-    <p>トップページのメニューから「履修・成績」をクリックし、さらに「履修登録」を選択します。</p>
-    <div class="image-placeholder">【メニュー選択画面 イメージ】</div>
-  </div>
-
-  <h2>3. 科目の検索・選択</h2>
-  <div class="step-box">
-    <p>「科目の追加」ボタンを押し、自身の所属学部の開講科目を検索します。湘南中央大学では、以下の7学部の科目が提供されています。</p>
-    
-    <table class="faculty-table">
-      <tr>
-        <td>経営学部</td><td>経済学部</td><td>法学部</td><td>教育学部</td>
-      </tr>
-      <tr>
-        <td>人間社会学部</td><td>観光文化学部</td><td colspan="2">生活環境計画学部</td>
-      </tr>
-    </table>
-
-    <div class="alert-box">
-      <strong>【注意】</strong>
-      他学部履修を希望する場合は、必ず各学部の「履修の手引き」を確認し、上限単位数に注意してください。
-    </div>
-  </div>
-
-  <h2>4. 登録内容の確認・確定</h2>
-  <div class="step-box">
-    <h3>講義の確認</h3>
-    <p>全ての科目を登録した後、ページ下部の<strong>＜登録内容を確認＞</strong>を押します。</p>
-    
-    <h3>登録の実行</h3>
-    <p>表示された一覧に間違いがなければ、<strong>＜登録実行＞</strong>を押してください。このボタンを押さない限り、データは保存されません。</p>
-    
-    <div class="image-placeholder" style="border: 2px dashed #0b2a44;">
-      【登録完了：この画面をスクリーンショットなどで保存してください】
-    </div>
-  </div>
-
-  <h2>5. エラーが出た場合</h2>
-  <div class="step-box">
-    <p>「時間割重複」「単位上限超え」などのエラーが表示された場合は、該当科目のチェックを外して再度確認を行ってください。</p>
-  </div>
-
-  <div class="alert-box" style="background: #fff9db; border-color: #fadb14; color: #856404;">
-    <strong>【履修登録期間外の操作について】</strong>
-    期間を過ぎた後の追加・修正は一切認められません。進級・卒業要件に関わるため、必ず最終確定画面を確認してください。
-  </div>
-
 </div>
 
-<footer>
-  &copy; 2026 Shonan Chuo University. All Rights Reserved.
-</footer>
+<div id="modal">
+  <div class="modal-content">
+    <h3 style="color: #2f855a;">✓ 履修申請完了</h3>
+    <p>2026年度 春学期の履修申請を受け付けました。<br>登録内容は大学メール宛に送信されます。</p>
+    <button class="btn btn-save" onclick="location.reload()">閉じる</button>
+  </div>
+</div>
+
+<script>
+  let units = 0;
+
+  function toggleSubject(el, name) {
+    if (el.classList.contains('selected')) {
+      el.classList.remove('selected');
+      units -= 2;
+    } else {
+      el.classList.add('selected');
+      units += 2;
+    }
+    document.getElementById('unit-count').innerText = units;
+  }
+
+  function showComplete() {
+    if (units === 0) {
+      alert("科目が選択されていません。");
+      return;
+    }
+    document.getElementById('modal').style.display = 'flex';
+  }
+</script>
 
 </body>
 </html>
