@@ -2,113 +2,160 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>履修登録システム S-Navi | 湘南中央大学</title>
+  <title>Web履修登録 | 湘南中央大学 S-Navi</title>
   <style>
-    :root { --main-blue: #0b2a44; --accent-gold: #d4af37; --bg-gray: #f4f7f8; }
-    body { margin: 0; font-family: sans-serif; background: var(--bg-gray); color: #333; }
+    :root { --meiji-blue: #004098; --light-blue: #e8f0f7; --border-color: #ccc; }
+    body { margin: 0; font-family: "Meiryo", sans-serif; background: #fff; color: #333; }
+
+    /* ===== HEADER ===== */
+    header { background: #f8f9fa; padding: 10px 20px; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; font-size: 13px; }
+
+    .main-container { padding: 20px; max-width: 1000px; margin: 0 auto; }
+
+    /* ===== UTILITY BAR (年度・学期切り替え) ===== */
+    .utility-bar { display: flex; align-items: center; gap: 10px; margin-bottom: 20px; }
+    select { padding: 5px; border: 1px solid var(--border-color); }
     
-    /* ヘッダー */
-    header { background: var(--main-blue); color: white; padding: 15px 30px; display: flex; justify-content: space-between; align-items: center; }
-    .status-bar { font-size: 13px; }
+    .term-tabs { display: flex; border: 1px solid var(--border-color); border-radius: 4px; overflow: hidden; }
+    .term-tab { padding: 5px 20px; cursor: pointer; background: #fff; border-right: 1px solid var(--border-color); font-size: 14px; }
+    .term-tab:last-child { border-right: none; }
+    .term-tab.active { background: #fff; color: #d32f2f; border-bottom: 2px solid #d32f2f; font-weight: bold; }
+    .term-tab:hover:not(.active) { background: #f0f0f0; }
 
-    .container { max-width: 1100px; margin: 20px auto; padding: 20px; background: white; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+    /* ===== TABLE SECTION ===== */
+    .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+    .search-btn { background: #fff; border: 1px solid var(--border-color); padding: 5px 15px; border-radius: 4px; cursor: pointer; }
+
+    .timetable { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    .timetable th { background: var(--light-blue); border: 1px solid var(--border-color); padding: 8px; font-weight: normal; font-size: 14px; }
+    .timetable td { border: 1px solid var(--border-color); height: 85px; vertical-align: top; padding: 5px; position: relative; }
+
+    /* 講義セルの中身 */
+    .slot { width: 100%; height: 100%; cursor: pointer; font-size: 11px; overflow: hidden; display: flex; flex-direction: column; justify-content: space-between; }
+    .slot:hover { background: #f9f9f9; }
+    .slot.selected { background: #d1e3ff; }
     
-    h2 { border-left: 5px solid var(--main-blue); padding-left: 10px; font-size: 20px; }
+    .subject-code { color: #004098; }
+    .subject-name { font-weight: bold; margin-top: 2px; }
+    .edit-icon { position: absolute; bottom: 5px; right: 5px; font-size: 12px; color: #666; }
 
-    /* 時間割テーブル */
-    .timetable { width: 100%; border-collapse: collapse; margin-top: 20px; table-layout: fixed; }
-    .timetable th { background: #eef2f6; border: 1px solid #ccc; padding: 10px; font-size: 14px; }
-    .timetable td { border: 1px solid #ccc; height: 80px; text-align: center; vertical-align: middle; padding: 5px; }
+    /* ===== FOOTER ACTION ===== */
+    .footer-action { position: fixed; bottom: 0; left: 0; width: 100%; background: #e8f0f7; padding: 15px; border-top: 2px solid var(--meiji-blue); display: flex; justify-content: center; gap: 20px; align-items: center; }
+    .btn-confirm { background: #0089a7; color: white; border: none; padding: 10px 25px; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 16px; border: 1px solid #006e85; }
 
-    /* 授業ボタン */
-    .subject-btn {
-      width: 100%; height: 100%; border: 1px dashed #aaa; background: #fafafa;
-      cursor: pointer; font-size: 12px; transition: 0.2s; border-radius: 4px;
-    }
-    .subject-btn:hover { background: #eef; border-color: var(--main-blue); }
-    .subject-btn.selected { background: #d1e3ff; border: 1px solid #0056b3; font-weight: bold; color: #0056b3; }
-
-    /* 下部アクション */
-    .action-area { margin-top: 30px; display: flex; justify-content: flex-end; gap: 15px; border-top: 2px solid #eee; padding-top: 20px; }
-    .btn { padding: 12px 30px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-    .btn-save { background: #666; color: white; }
-    .btn-confirm { background: #c53030; color: white; }
-
-    /* モーダル（完了通知） */
-    #modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); align-items: center; justify-content: center; }
-    .modal-content { background: white; padding: 40px; border-radius: 10px; text-align: center; max-width: 400px; }
+    /* 完了表示 */
+    #overlay { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); z-index:100; align-items:center; justify-content:center; }
+    .modal { background: #fff; padding: 30px; border-radius: 8px; text-align: center; }
   </style>
 </head>
 <body>
 
 <header>
-  <div>湘南中央大学 教務システム <strong>S-Navi</strong></div>
-  <div class="status-bar">ログイン中：2026SCU001 湘南 太郎（生活環境計画学部）</div>
+  <div>湘南中央大学 履修登録システム</div>
+  <div>ログイン：2026SCU001 湘南 太郎</div>
 </header>
 
-<div class="container">
-  <h2>2026年度 春学期 履修登録</h2>
-  <p style="font-size: 13px; color: #666;">※コマをクリックして授業を選択してください。</p>
+<div class="main-container">
+  <div class="utility-bar">
+    <select id="year-select">
+      <option>2026年度</option>
+      <option>2027年度</option>
+    </select>
+    <div class="term-tabs">
+      <div class="term-tab" onclick="changeTerm('spring', this)">春(20xx年度)</div>
+      <div class="term-tab active" onclick="changeTerm('fall', this)">秋(20xx年度)</div>
+    </div>
+  </div>
+
+  <div class="section-header">
+    <div style="font-weight: bold;">| 通常講義</div>
+    <button class="search-btn">講義検索</button>
+  </div>
 
   <table class="timetable">
-    <tr>
-      <th style="width: 50px;">限</th>
-      <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th>
-    </tr>
-    <tr>
-      <th>1</th>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '経営学入門')">経営学入門</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, 'ミクロ経済学')">ミクロ経済学</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '法学概論')">法学概論</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '情報リテラシー')">情報リテラシー</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '英語I')">英語I</button></td>
-    </tr>
-    <tr>
-      <th>2</th>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '日本文学')">日本文学</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '心理学基礎')">心理学基礎</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '湘南地域論')">湘南地域論</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, '農業科学')">農業科学</button></td>
-      <td><button class="subject-btn" onclick="toggleSubject(this, 'スポーツ実習')">スポーツ実習</button></td>
-    </tr>
+    <thead>
+      <tr>
+        <th style="width: 40px;"></th>
+        <th>月</th><th>火</th><th>水</th><th>木</th><th>金</th><th>土</th>
+      </tr>
+    </thead>
+    <tbody id="timetable-body">
+      </tbody>
   </table>
-
-  <div class="action-area">
-    <div style="margin-right: auto; font-size: 14px;">現在の登録単位数： <strong id="unit-count">0</strong> / 24単位</div>
-    <button class="btn btn-save" onclick="alert('一時保存しました')">一時保存</button>
-    <button class="btn btn-confirm" onclick="showComplete()">登録内容を確認して確定</button>
-  </div>
 </div>
 
-<div id="modal">
-  <div class="modal-content">
-    <h3 style="color: #2f855a;">✓ 履修申請完了</h3>
-    <p>2026年度 春学期の履修申請を受け付けました。<br>登録内容は大学メール宛に送信されます。</p>
-    <button class="btn btn-save" onclick="location.reload()">閉じる</button>
+<div class="footer-action">
+  <span style="font-size: 14px; background: #002e63; color: white; padding: 5px 15px; border-radius: 4px;">登録内容確認を押します ➔</span>
+  <button class="btn-confirm" onclick="confirmRegistration()">登録内容確認</button>
+</div>
+
+<div id="overlay">
+  <div class="modal">
+    <h3>登録申請を受け付けました</h3>
+    <p>選考結果はポータルを確認してください。</p>
+    <button onclick="location.reload()">戻る</button>
   </div>
 </div>
 
 <script>
-  let units = 0;
+  // ランダム生成用のデータ
+  const subjects = [
+    {code: "83J01229", name: "ICTベーシックII"},
+    {code: "11H20703", name: "刑事訴訟法II"},
+    {code: "11G01023", name: "専門演習BII"},
+    {code: "BUS2026", name: "組織経営論"},
+    {code: "ECO4040", name: "マクロ統計学"},
+    {code: "LEP7777", name: "環境デザイン論"}
+  ];
+  const teachers = ["石田 倫識", "佐藤 健一", "田中 美咲", "鈴木 裕太"];
 
-  function toggleSubject(el, name) {
-    if (el.classList.contains('selected')) {
-      el.classList.remove('selected');
-      units -= 2;
-    } else {
-      el.classList.add('selected');
-      units += 2;
+  function generateTable() {
+    const tbody = document.getElementById('timetable-body');
+    tbody.innerHTML = '';
+    
+    // 日付をシードにして、その日1日は同じ結果が出るようにする
+    const seed = new Date().getDate() + new Date().getMonth();
+    
+    for (let i = 1; i <= 7; i++) { // 7限まで
+      let tr = document.createElement('tr');
+      tr.innerHTML = `<th>${i}</th>`;
+      for (let j = 0; j < 6; j++) { // 月〜土
+        let isSet = Math.random() > 0.7; // 30%の確率で科目を表示
+        let td = document.createElement('td');
+        if (isSet) {
+          const sub = subjects[Math.floor(Math.random() * subjects.length)];
+          const tea = teachers[Math.floor(Math.random() * teachers.length)];
+          td.innerHTML = `
+            <div class="slot" onclick="this.classList.toggle('selected')">
+              <div>
+                <span class="subject-code">${sub.code}</span><br>
+                <span class="subject-name">${sub.name}</span><br>
+                <span>${tea}</span>
+              </div>
+              <span class="edit-icon">✎</span>
+            </div>
+          `;
+        } else {
+          td.innerHTML = `<span class="edit-icon" style="opacity:0.3">✎</span>`;
+        }
+        tr.appendChild(td);
+      }
+      tbody.appendChild(tr);
     }
-    document.getElementById('unit-count').innerText = units;
   }
 
-  function showComplete() {
-    if (units === 0) {
-      alert("科目が選択されていません。");
-      return;
-    }
-    document.getElementById('modal').style.display = 'flex';
+  function changeTerm(term, el) {
+    document.querySelectorAll('.term-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+    generateTable(); // 学期を切り替えると内容を再生成（ランダム）
   }
+
+  function confirmRegistration() {
+    document.getElementById('overlay').style.display = 'flex';
+  }
+
+  // 初期生成
+  generateTable();
 </script>
 
 </body>
